@@ -1,0 +1,54 @@
+import { Meta, Story, Canvas } from "@storybook/addon-docs";
+
+import SampleLoaderComponent from "./SampleLoaderComponent.svelte";
+
+import fetch from "node-fetch";
+
+<Meta title="Svelte loader example" component={SampleLoaderComponent} />
+
+<Story
+  name="Example Loader from a story"
+  args={{ 
+    todo: {
+      userId:2,
+      id:2,
+      title:'something',
+      completed:false,
+   },
+   }}
+  loaders={[
+    async () => ({
+      todo: await (
+        await fetch("https://jsonplaceholder.typicode.com/todos/1")
+      ).json()
+    })
+  ]}>
+  {(args, { loaded: { todo } }) => ({
+    Component: SampleLoaderComponent,
+    props: {
+      ...args,
+      todo,
+    },
+  })}
+</Story>
+
+# Example Preview loader
+
+<Story
+  name="Example Loader from preview"
+  args={{ 
+    todo: {
+      userId:2,
+      id:2,
+      title:'something',
+      completed:false,
+   },
+   }}>
+  {(args, { loaded: { currentUser } }) => ({
+    Component: SampleLoaderComponent,
+    props: {
+      ...args,
+      todo: currentUser,
+    },
+  })}
+</Story>
