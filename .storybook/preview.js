@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-async function fetchTopTodo() {
+/* async function fetchTopTodo() {
   try {
     const fetchRequest = await fetch(
       "https://jsonplaceholder.typicode.com/todos/1"
@@ -16,7 +16,14 @@ export const loaders = [
   async () => ({
     currentUser: await fetchTopTodo(),
   }),
-];
+]; */
+export const loaders =[
+  async () => ({
+    currentUser: await (
+      await fetch("https://jsonplaceholder.typicode.com/todos/1")
+    ).json(),
+  }),
+]
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
